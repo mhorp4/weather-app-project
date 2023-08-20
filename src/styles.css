@@ -40,6 +40,10 @@ h1 {
 h2 {
   margin-top: -80px;
 }
+.h2_temperature .active {
+  color: #212529;
+  cursor: default;
+}
 #main_icon {
   height: 150px;
 }
