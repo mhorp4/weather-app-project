@@ -33,9 +33,15 @@ function showCurrentWeather(response) {
   let currentWindSpeed = response.data.wind.speed;
   let windSpeedValue = document.querySelector("#windspeed-value");
   windSpeedValue.innerHTML = currentWindSpeed;
-  let currentSkyCondition = response.data.weather[0].main;
+  let currentSkyCondition = response.data.weather[0].description;
   let skyValue = document.querySelector("#sky");
   skyValue.innerHTML = currentSkyCondition;
+  let mainIcon = document.querySelector("#main_icon");
+  mainIcon.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  mainIcon.setAttribute("alt", response.data.weather[0].description);
 }
 function searchCity(event) {
   event.preventDefault();
@@ -66,9 +72,15 @@ function showWeatherGeolocation() {
       let currentWindSpeed = response.data.wind.speed;
       let windSpeedValue = document.querySelector("#windspeed-value");
       windSpeedValue.innerHTML = currentWindSpeed;
-      let currentSkyCondition = response.data.weather[0].main;
+      let currentSkyCondition = response.data.weather[0].description;
       let skyValue = document.querySelector("#sky");
       skyValue.innerHTML = currentSkyCondition;
+      let mainIcon = document.querySelector("#main_icon");
+      mainIcon.setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+      );
+      mainIcon.setAttribute("alt", response.data.weather[0].description);
     }
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
