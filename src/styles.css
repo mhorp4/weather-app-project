@@ -34,7 +34,7 @@ h1 {
   margin-right: 20px;
   font-size: 25px;
   position: relative;
-  top: -40px;
+  top: -30px;
   line-height: normal;
 }
 h2 {
@@ -69,4 +69,14 @@ a {
 }
 #sky {
   text-transform: capitalize;
+}
+#weather-forecast-day {
+  text-align: center;
+}
+#forecast-icon {
+  max-width: 50px;
+}
+#weather-forecast-temp-max,
+#weather-forecast-temp-min {
+  font-size: 13px;
 }

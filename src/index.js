@@ -20,7 +20,49 @@ if (minutes < 10) {
 }
 let date = document.querySelector("#date");
 date.innerHTML = `${weekDay} ${hours}:${minutes}`;
+
+function formatForecastDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[day];
+}
+// Display forecast
+function displayForecast(response) {
+  let forecast = response.data.daily;
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row">`;
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `          <div class="col-2">
+                <div class="p-3">
+                 <span id="weather-forecast-day">${formatForecastDay(
+                   forecastDay.dt
+                 )}</span> <br />
+                  <img id="forecast-icon" src="https://openweathermap.org/img/wn/${
+                    forecastDay.weather[0].icon
+                  }@2x.png"></img> <br />
+                  <span id="weather-forecast-temp-max">${Math.round(
+                    forecastDay.temp.max
+                  )}</span>° <span id="weather-forecast-temp-min">${Math.round(
+          forecastDay.temp.min
+        )}</span>°
+                </div>
+              </div>`;
+    }
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
 // Search engine and the City Name display
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "4b3503b2f08a729413c4d33ef1186004";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
 
 function showCurrentWeather(response) {
   console.log(response);
@@ -43,6 +85,8 @@ function showCurrentWeather(response) {
   );
   mainIcon.setAttribute("alt", response.data.weather[0].description);
   celsiusTemp = Math.round(response.data.main.temp);
+
+  getForecast(response.data.coord);
 }
 function searchCity(event) {
   event.preventDefault();
@@ -83,6 +127,7 @@ function showWeatherGeolocation() {
       );
       mainIcon.setAttribute("alt", response.data.weather[0].description);
       celsiusTemp = Math.round(response.data.main.temp);
+      getForecast(response.data.coord);
     }
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
